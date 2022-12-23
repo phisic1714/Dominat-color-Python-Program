@@ -1,1 +1,1 @@
-# Image-Stock-Processing-ISP-Python-Program
+# Image Stock Processing Python Program
