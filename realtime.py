@@ -1,18 +1,22 @@
 # Import required Libraries
+import subprocess
 from tkinter import *
-from tkinter import filedialog
 from PIL import Image, ImageTk
 import cv2
-from random import randint
-import color_detect
+import function.color_detect as color_detect
 
 # Create an instance of TKinter Window or frame
 win= Tk()
 
 # Set the size of the window
-win.geometry('1080x610')
-label =Label(win)
+width= win.winfo_screenwidth()
+height= win.winfo_screenheight()
+#setting tkinter window size
+win.geometry("%dx%d" % (width, height))
 win.option_add('*Font', 'times 30')
+win.title('Dominant Color image Program (โปรแกรมระบุสีที่มีในภาพ)')
+
+label =Label(win)
 
 
 b1 = Button(win, text='Upload File', 
@@ -25,19 +29,24 @@ def upload_file():
     f_types = [('image Files', '*.jpg'),('image Files', '*.png')]
     filename = filedialog.askopenfilename(filetypes=f_types)
     '''
+    pixels_x=280
+    pixels_y=210
     ret, frame = cap.read()
     
-    
-    
-    color_detect.dominant_color()
-    img = ImageTk.PhotoImage(file='captured_image.jpg')
-    img1 = ImageTk.PhotoImage(file='my_plot.png')
-    img2 = ImageTk.PhotoImage(file='output.png')
-    Label(win, image=img).place(x=50,y=200)
-    Label(win, image=img1).place(x=50,y=250)
-    Label(win, image=img2).place(x=50,y=300)
-    label['text'] = 5
-    win.after(5000, upload_file)
+    color_detect.dominant_color('record/captured_image.jpg')
+    img1=Image.open('record/captured_image.jpg')
+    img2=Image.open('record/output.png')
+    img3=Image.open('record/my_plot1.png')
+    img4=Image.open('record/my_plot.png')
+    img1 = ImageTk.PhotoImage(img1.resize((pixels_x, pixels_y)))
+    img2 = ImageTk.PhotoImage(img2.resize((pixels_x, pixels_y)))
+    img3 = ImageTk.PhotoImage(img3.resize((pixels_x, pixels_y)))
+    img4 = ImageTk.PhotoImage(img4.resize((pixels_x, pixels_y)))
+    Label(win, image=img1).place(x=750,y=100)
+    Label(win, image=img2).place(x=1010,y=100)
+    Label(win, image=img3).place(x=750,y=300)
+    Label(win, image=img4).place(x=1010,y=300)
+    label.after(5000, upload_file)
     
     
 cap= cv2.VideoCapture(0)
@@ -55,7 +64,7 @@ def show_frames():
    label.imgtk = imgtk
    label.configure(image=imgtk)
    # Repeat after an interval to capture continiously
-   cv2.imwrite('captured_image.jpg', frame)
+   cv2.imwrite('record/captured_image.jpg', frame)
    
    label.after(20, show_frames)
 
@@ -63,7 +72,6 @@ def show_frames():
 # run first time
 
 show_frames()
-
 
 # Create a Label Widget to display the text or Image
 

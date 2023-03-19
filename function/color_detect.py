@@ -3,19 +3,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import imutils
+import warnings
 
-def dominant_color():
-    clusters = 6 # try changing it
+warnings.filterwarnings("ignore")
 
-    img = cv2.imread('captured_image.jpg')
+def dominant_color(imagepath):
+    clusters = 5 # try changing it
+
+    img = cv2.imread(imagepath)
     org_img = img.copy()
-    print('Org image shape --> ',img.shape)
+    
 
     img = imutils.resize(img,height=200)
-    print('After resizing shape --> ',img.shape)
 
     flat_img = np.reshape(img,(-1,3))
-    print('After Flattening shape --> ',flat_img.shape)
 
     kmeans = KMeans(n_clusters=clusters,random_state=0)
     kmeans.fit(flat_img)
@@ -35,8 +36,9 @@ def dominant_color():
         plt.xticks([])
         plt.yticks([])
         plt.xlabel(str(round(p_and_c[i][0]*100,2))+'%')
+        plt.rcParams.update({'font.size': 25})
 
-    plt.savefig('my_plot.png')
+    plt.savefig('record/my_plot.png')
 
     bar = np.ones((50,500,3),dtype='uint')
     plt.figure(figsize=(12,8))
@@ -55,7 +57,8 @@ def dominant_color():
     plt.imshow(bar)
     plt.xticks([])
     plt.yticks([])
-    plt.savefig('my_plot1.png')
+    plt.rcParams.update({'font.size': 25})
+    plt.savefig('record/my_plot1.png')
     rows = 1000
     cols = int((org_img.shape[0]/org_img.shape[1])*rows)
     img = cv2.resize(org_img,dsize=(rows,cols),interpolation=cv2.INTER_LINEAR)
@@ -74,4 +77,4 @@ def dominant_color():
         cv2.putText(final,str(i+1),(start+25,cols//2+45),cv2.FONT_HERSHEY_DUPLEX,1,(255,255,255),1,cv2.LINE_AA)
         start = end+20
         
-    cv2.imwrite('output.png',final)
+    cv2.imwrite('record/output.png',final)
