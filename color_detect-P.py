@@ -13,7 +13,6 @@ cap = cv2.VideoCapture(0)
 cv2.namedWindow('Webcam')
 
 # Create a variable to keep track of whether the user wants to record an image or not
-record_image = False
 
 # Loop through frames from the video capture
 while True:
@@ -31,13 +30,10 @@ while True:
         #   กด r เพื่อถ่าย กด q เพื่อออก
         # If the user presses the 'r' key, set the record_image variable to True
         elif cv2.waitKey(1) & 0xFF == ord('r'):
-            record_image = True
 
-        # If the record_image variable is True, save the current frame to a file
-        if record_image:
             cv2.imwrite('captured_image.jpg', frame)
             print('Image saved successfully!')
-            record_image = False
+            break
 
 # Release the VideoCapture object and destroy all windows
 cap.release()
