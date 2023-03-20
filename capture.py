@@ -22,6 +22,8 @@ win.title('Dominant Color image Program (โปรแกรมระบุสี
 
 label =Label(win)
 def back():
+ cap.release() 
+ win.quit()
  win.destroy()
  subprocess.call(["python", "main.py"])
 b3 = Button(win, text='Back',

@@ -24,6 +24,8 @@ b1.grid(row=2,column=1)
 
 label =Label(win)
 def back():
+ cap.release() 
+ win.quit()
  win.destroy()
  subprocess.call(["python", "main.py"])
 b2 = Button(win, text='Back',
