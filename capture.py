@@ -22,53 +22,40 @@ win.title('Dominant Color image Program (โปรแกรมระบุสี
 label =Label(win)
 
 
-b1 = Button(win, text='Upload File', 
-   width=20,command = lambda:destroy())
-b1.grid(row=2,column=1) 
-def destroy():
-    for widget in label.winfo_children():
-        widget.destroy()
-    upload_file()
+
+
 def upload_file():
-    
+    global imgf,img1f,img2f,img3f
     f_types = [('image Files', '*.jpg'),('image Files', '*.png')]
     filename = filedialog.askopenfilename(filetypes=f_types)
     pixels_x=280
     pixels_y=210
-    img_resized=Image.open(filename).resize((640,480))
-    img = ImageTk.PhotoImage(img_resized)
-    Label(win, image=img).place(x=50,y=100)
+    img_resized=Image.open(filename).resize((pixels_x, pixels_y))
     color_detect.dominant_color(filename)
     img1=Image.open('record/output.png')
     img2=Image.open('record/my_plot.png')
     img3=Image.open('record/my_plot1.png')
-    img1 = ImageTk.PhotoImage(img1.resize((300, 225)))
+    img = ImageTk.PhotoImage(img_resized)
+    img1 = ImageTk.PhotoImage(img1.resize((pixels_x, pixels_y)))
     img2 = ImageTk.PhotoImage(img2.resize((pixels_x, pixels_y)))
     img3 = ImageTk.PhotoImage(img3.resize((pixels_x, pixels_y)))
-    Label(win, image=img1).place(x=870,y=50)
-    Label(win, image=img2).place(x=1010,y=300)
-    Label(win, image=img3).place(x=750,y=300)
+    imgf=Label(win, image=img)
+    imgf.place(x=750,y=100)
+    img1f=Label(win, image=img1)
+    img1f.place(x=1010,y=100)
+    img2f=Label(win, image=img2)
+    img2f.place(x=1010,y=300)
+    img3f=Label(win, image=img3)
+    img3f.place(x=750,y=300)
+b1 = Button(win, text='Upload File', 
+   width=20,command = lambda:upload_file())
+b1.grid(row=2,column=1)     
     
-    
-cap= cv2.VideoCapture(0)
-def show_frames():
-   label.place(x=50,y=100)
-   # Get the latest frame and convert into Image
-   ret, frame = cap.read()
-   cv2image= cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-   img = Image.fromarray(cv2image)
-   # Convert image to PhotoImage
-   imgtk = ImageTk.PhotoImage(image = img)
-   label.imgtk = imgtk
-   label.configure(image=imgtk)
-   # Repeat after an interval to capture continiously
-   
-   label.after(20, show_frames)
-b2 = Button(win, text='Webcam', 
-   width=20,command = lambda:show_frames())
-b2.grid(row=3,column=1)
+
+
 
 def rec():
+    global imgf,img1f,img2f,img3f
     pixels_x=280
     pixels_y=210
     ret, frame = cap.read()
@@ -82,18 +69,30 @@ def rec():
     img2 = ImageTk.PhotoImage(img2.resize((pixels_x, pixels_y)))
     img3 = ImageTk.PhotoImage(img3.resize((pixels_x, pixels_y)))
     img4 = ImageTk.PhotoImage(img4.resize((pixels_x, pixels_y)))
-    Label(win, image=img1).place(x=750,y=100)
-    Label(win, image=img2).place(x=1010,y=100)
-    Label(win, image=img3).place(x=750,y=300)
-    Label(win, image=img4).place(x=1010,y=300)
+    imgf=Label(win, image=img1)
+    imgf.place(x=750,y=100)
+    img1f=Label(win, image=img2)
+    img1f.place(x=1010,y=100)
+    img2f=Label(win, image=img3)
+    img2f.place(x=750,y=300)
+    img3f=Label(win, image=img4)
+    img3f.place(x=1010,y=300)
 b3 = Button(win, text='Capture', 
    width=20,command = lambda:rec())
 b3.grid(row=4,column=1)
 
-# Loop through frames from the video capture
-
-
-
-# Create a Label Widget to display the text or Image
-
+cap= cv2.VideoCapture(0)
+def show_frames():
+   label.place(x=50,y=100)
+   # Get the latest frame and convert into Image
+   ret, frame = cap.read()
+   cv2image= cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+   img = Image.fromarray(cv2image)
+   # Convert image to PhotoImage
+   imgtk = ImageTk.PhotoImage(image = img)
+   label.imgtk = imgtk
+   label.configure(image=imgtk)
+   # Repeat after an interval to capture continiously
+   label.after(20, show_frames)
+show_frames()
 win.mainloop()

@@ -19,16 +19,11 @@ win.title('Dominant Color image Program (โปรแกรมระบุสี
 label =Label(win)
 
 
-b1 = Button(win, text='Upload File', 
+b1 = Button(win, text='Start', 
    width=20,command = lambda:upload_file())
 b1.grid(row=2,column=1) 
 
 def upload_file():
-    global img
-    '''
-    f_types = [('image Files', '*.jpg'),('image Files', '*.png')]
-    filename = filedialog.askopenfilename(filetypes=f_types)
-    '''
     pixels_x=280
     pixels_y=210
     ret, frame = cap.read()
@@ -50,9 +45,6 @@ def upload_file():
     
     
 cap= cv2.VideoCapture(0)
-
-# Loop through frames from the video capture
-
 def show_frames():
    label.place(x=50,y=100)
    # Get the latest frame and convert into Image
@@ -65,7 +57,6 @@ def show_frames():
    label.configure(image=imgtk)
    # Repeat after an interval to capture continiously
    cv2.imwrite('record/captured_image.jpg', frame)
-   
    label.after(20, show_frames)
 
 
