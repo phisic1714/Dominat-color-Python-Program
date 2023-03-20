@@ -15,13 +15,20 @@ height= win.winfo_screenheight()
 win.geometry("%dx%d" % (width, height))
 win.option_add('*Font', 'times 30')
 win.title('Dominant Color image Program (โปรแกรมระบุสีที่มีในภาพ)')
+win.configure(bg='#616161')
 
 label =Label(win)
-
-
 b1 = Button(win, text='Start', 
    width=20,command = lambda:start())
 b1.grid(row=2,column=1) 
+
+label =Label(win)
+def back():
+ win.destroy()
+ subprocess.call(["python", "main.py"])
+b2 = Button(win, text='Back',
+ width=20,command = lambda:back())
+b2.grid(row=3,column=1)
 
 def start():
     global img1,img2,img3,img4
@@ -38,16 +45,16 @@ def start():
     img2 = ImageTk.PhotoImage(img2.resize((pixels_x, pixels_y)))
     img3 = ImageTk.PhotoImage(img3.resize((pixels_x, pixels_y)))
     img4 = ImageTk.PhotoImage(img4.resize((pixels_x, pixels_y)))
-    Label(win, image=img1).place(x=750,y=100)
-    Label(win, image=img2).place(x=1010,y=100)
-    Label(win, image=img3).place(x=750,y=300)
-    Label(win, image=img4).place(x=1010,y=300)
+    Label(win, image=img1).place(x=750,y=250)
+    Label(win, image=img2).place(x=1010,y=250)
+    Label(win, image=img3).place(x=750,y=450)
+    Label(win, image=img4).place(x=1010,y=450)
     label.after(5000, start)
     
     
 cap= cv2.VideoCapture(0)
 def show_frames():
-   label.place(x=50,y=100)
+   label.place(x=50,y=250)
    # Get the latest frame and convert into Image
    ret, frame = cap.read()
    cv2image= cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
