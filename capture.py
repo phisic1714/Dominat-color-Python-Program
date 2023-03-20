@@ -19,9 +19,14 @@ win.configure(bg='#616161')
 win.option_add('*Font', 'times 30')
 win.title('Dominant Color image Program (โปรแกรมระบุสีที่มีในภาพ)')
 
+
 label =Label(win)
-
-
+def back():
+ win.destroy()
+ subprocess.call(["python", "main.py"])
+b3 = Button(win, text='Back',
+ width=20,command = lambda:back())
+b3.grid(row=3,column=1)
 
 
 def upload_file():
@@ -40,20 +45,19 @@ def upload_file():
     img2 = ImageTk.PhotoImage(img2.resize((pixels_x, pixels_y)))
     img3 = ImageTk.PhotoImage(img3.resize((pixels_x, pixels_y)))
     imgf=Label(win, image=img)
-    imgf.place(x=750,y=100)
+    imgf.place(x=750,y=250)
     img1f=Label(win, image=img1)
-    img1f.place(x=1010,y=100)
+    img1f.place(x=1010,y=250)
     img2f=Label(win, image=img2)
-    img2f.place(x=1010,y=300)
+    img2f.place(x=1010,y=450)
     img3f=Label(win, image=img3)
-    img3f.place(x=750,y=300)
+    img3f.place(x=750,y=450)
+
+label =Label(win)
 b1 = Button(win, text='Upload File', 
    width=20,command = lambda:upload_file())
-b1.grid(row=2,column=1)     
+b1.grid(row=4,column=1)     
     
-
-
-
 def rec():
     global img1,img2,img3,img4
     pixels_x=280
@@ -70,20 +74,20 @@ def rec():
     img3 = ImageTk.PhotoImage(img3.resize((pixels_x, pixels_y)))
     img4 = ImageTk.PhotoImage(img4.resize((pixels_x, pixels_y)))
     imgf=Label(win, image=img1)
-    imgf.place(x=750,y=100)
+    imgf.place(x=750,y=250)
     img1f=Label(win, image=img2)
-    img1f.place(x=1010,y=100)
+    img1f.place(x=1010,y=250)
     img2f=Label(win, image=img3)
-    img2f.place(x=750,y=300)
+    img2f.place(x=750,y=450)
     img3f=Label(win, image=img4)
-    img3f.place(x=1010,y=300)
+    img3f.place(x=1010,y=450)
 b3 = Button(win, text='Capture', 
    width=20,command = lambda:rec())
-b3.grid(row=4,column=1)
+b3.grid(row=5,column=1)
 
 cap= cv2.VideoCapture(0)
 def show_frames():
-   label.place(x=50,y=100)
+   label.place(x=50,y=250)
    # Get the latest frame and convert into Image
    ret, frame = cap.read()
    cv2image= cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
@@ -94,5 +98,7 @@ def show_frames():
    label.configure(image=imgtk)
    # Repeat after an interval to capture continiously
    label.after(20, show_frames)
+   
 show_frames()
+
 win.mainloop()
