@@ -20,10 +20,11 @@ label =Label(win)
 
 
 b1 = Button(win, text='Start', 
-   width=20,command = lambda:upload_file())
+   width=20,command = lambda:start())
 b1.grid(row=2,column=1) 
 
-def upload_file():
+def start():
+    global img1,img2,img3,img4
     pixels_x=280
     pixels_y=210
     ret, frame = cap.read()
@@ -41,7 +42,7 @@ def upload_file():
     Label(win, image=img2).place(x=1010,y=100)
     Label(win, image=img3).place(x=750,y=300)
     Label(win, image=img4).place(x=1010,y=300)
-    label.after(5000, upload_file)
+    label.after(5000, start)
     
     
 cap= cv2.VideoCapture(0)
