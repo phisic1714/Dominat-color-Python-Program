@@ -25,7 +25,7 @@ label =Label(win)
 
 
 def upload_file():
-    global imgf,img1f,img2f,img3f
+    global img,img1,img2,img3
     f_types = [('image Files', '*.jpg'),('image Files', '*.png')]
     filename = filedialog.askopenfilename(filetypes=f_types)
     pixels_x=280
@@ -55,7 +55,7 @@ b1.grid(row=2,column=1)
 
 
 def rec():
-    global imgf,img1f,img2f,img3f
+    global img1,img2,img3,img4
     pixels_x=280
     pixels_y=210
     ret, frame = cap.read()
