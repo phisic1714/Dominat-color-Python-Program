@@ -4,7 +4,7 @@ from tkinter import *
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import cv2
-import function.color_detect as color_detect
+import function.dominant_color as dominant_color
 
 # Create an instance of TKinter Window or frame
 win= Tk()
@@ -25,7 +25,7 @@ def back():
  cap.release() 
  win.quit()
  win.destroy()
- subprocess.call(["python", "main.py"])
+ subprocess.call(["python", "main.pyw"])
 b3 = Button(win, text='Back',
  width=20,command = lambda:back())
 b3.grid(row=3,column=1)
@@ -38,7 +38,7 @@ def upload_file():
     pixels_x=280
     pixels_y=210
     img_resized=Image.open(filename).resize((pixels_x, pixels_y))
-    color_detect.dominant_color(filename)
+    dominant_color.dominant_color(filename)
     img1=Image.open('record/output.png')
     img2=Image.open('record/my_plot.png')
     img3=Image.open('record/my_plot1.png')
@@ -66,7 +66,7 @@ def rec():
     pixels_y=210
     ret, frame = cap.read()
     cv2.imwrite('record/captured_image.jpg', frame)
-    color_detect.dominant_color('record/captured_image.jpg')
+    dominant_color.dominant_color('record/captured_image.jpg')
     img1=Image.open('record/captured_image.jpg')
     img2=Image.open('record/output.png')
     img3=Image.open('record/my_plot1.png')

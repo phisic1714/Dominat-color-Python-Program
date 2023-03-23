@@ -1,8 +1,5 @@
 import subprocess
 from tkinter import *
-from PIL import Image, ImageTk
-import cv2
-import function.color_detect as color_detect
 
 # Create an instance of TKinter Window or frame
 win= Tk()
